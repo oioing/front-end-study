@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <title>this의 이해</title>
+    <script>
+      class ClassCounterPage {
+        count = 10;
+
+        onClickCountUp = () => {
+          console.log("현재 카우트:", this.count);
+          // undefined가 나옴.
+          // 방법 1 : 화살표 함수로 변경하면 this가 언급될 당시에 한정되어 진행됨. 그래서 화살표 함수를 자주 씀.
+        };
+        // onClickCountUp {
+        //   console.log("현재 카우트:", this.count);
+        //   // undefined가 나옴.
+        // }
+
+        render() {
+          const button = document.createElement("button"); // react없이는 사실 이렇게 다 해야한다.
+          // button.count = 100; //버튼을 누르면 갑자기 this가 버튼이 되어버리기 때문에, this가 달라져서 값이 undefiend가 된다. 그래서 클릭하면 이건 100이 나옴
+          button.innerText = "카운트 올리기!";
+          button.addEventListener("click", this.onClickCountUp.bind(this)); //Listener : event까지 기다려주세요 라는 뜻.
+          //bind(this)는 this의 주체를 해당 요소에 제한해줘. 라는 2번째 방법
+          document.body.appendChild(button);
+        }
+      }
+
+      window.onload = () => {
+        const counter = new ClassCounterPage();
+        counter.render();
+      };
+    </script>
+  </head>
+  <body></body>
+</html>
